@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uscana Trattoria · Pizzeria</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --bg: #f7f7f5;
+      --card: #ffffff;
+      --accent: #8bbf5a; /* Olive */
+      --accent-dark: #6aa043;
+      --muted: #f2f2f2;
+      --terracotta: #c84b31;
+      --text: #24303f;
+    }
+
+    html,body{height:100%;}
+    body{background:var(--bg); color:var(--text); font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
+
+    h1,h2{font-family:'Playfair Display', serif; color:var(--text)}
+    header{background:linear-gradient(90deg,var(--accent) 0%, #ffffff 50%, var(--terracotta) 100%);} 
+
+    nav::-webkit-scrollbar { display: none; }
+    nav { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .site-container{max-width:1024px; margin:0 auto;}
+
+    /* Section card look */
+    section.card{background:var(--card); border-radius:16px; padding:18px; box-shadow:0 6px 18px rgba(36,48,63,0.06);} 
+    .section-title{display:flex; align-items:center; gap:12px;}
+    .section-title .emoji{font-size:1.4rem}
+
+    /* Menu rows */
+    .menu-item{display:flex; justify-content:space-between; gap:12px; align-items:flex-start; flex-wrap:wrap; padding:8px 0; border-bottom:1px dashed #eee}
+    .menu-item:last-child{border-bottom:0}
+    .menu-desc{display:block; font-size:0.95rem; color:#475569; margin-top:4px}
+
+    /* Price badge */
+    .menu-price{background:var(--muted); color:var(--text); padding:6px 10px; border-radius:999px; font-weight:600; min-width:72px; text-align:center}
+
+    /* Nav pills */
+    .nav-pill{background:transparent; border:1px solid rgba(36,48,63,0.06); padding:8px 12px; border-radius:999px; transition:all .18s; white-space:nowrap}
+    .nav-pill.active, .nav-pill:hover{background:var(--accent); color:#fff; transform:translateY(-2px); border-color:var(--accent-dark)}
+
+    /* Hover */
+    .menu-item:hover{transform:translateY(-3px); transition:transform .12s ease;}
+
+    /* Responsive tweaks */
+    @media (min-width:768px){
+      .menu-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+      .menu-item{align-items:center}
+    }
+
+    @media print{
+      body{background:#fff}
+      nav{position:static}
+      .menu-price{background:transparent; border-radius:0}
+      section.card{box-shadow:none}
+    }
+  </style>
+  <script>
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+      // set active class
+      document.querySelectorAll('.nav-pill').forEach(b => b.classList.remove('active'));
+      const btn = document.querySelector(`button[data-target='${id}']`);
+      if(btn) btn.classList.add('active');
+    }
+
+    window.addEventListener("scroll", () => {
+      const sections = document.querySelectorAll("section");
+      let scrollPos = window.scrollY + 180;
+      sections.forEach(section => {
+        const navBtn = document.querySelector(`button[data-target='${section.id}']`);
+        if (!navBtn) return;
+        if (section.offsetTop <= scrollPos && (section.offsetTop + section.offsetHeight) > scrollPos) {
+          navBtn.classList.add("active");
+        } else {
+          navBtn.classList.remove("active");
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <header class="p-6 text-center">
+    <div class="site-container">
+      <h1 class="text-3xl font-bold">Uscana – Trattoria · Pizzeria</h1>
+      <p class="mt-2 text-sm">Glashüttenstraße 5, Düsseldorf-Gerresheim · 📞 0211 – 27 57 01</p>
+      <p class="mt-1 text-sm">🕒 Täglich 11:30 – 23:00 Uhr · Montag Ruhetag</p>
+    </div>
+  </header>
+
+  <nav class="sticky top-0 bg-white shadow-sm z-10" style="backdrop-filter:blur(6px)">
+    <div class="site-container overflow-x-auto px-4 py-3">
+      <div class="flex gap-3">
+        <button class="nav-pill" data-target="antipasti-caldi" onclick="scrollToSection('antipasti-caldi')">🔥 Antipasti Caldi</button>
+        <button class="nav-pill" data-target="antipasti-freddi" onclick="scrollToSection('antipasti-freddi')">🥗 Antipasti Freddi</button>
+        <button class="nav-pill" data-target="insalata" onclick="scrollToSection('insalata')">🥗 Salate</button>
+        <button class="nav-pill" data-target="pasta" onclick="scrollToSection('pasta')">🍝 Pasta</button>
+        <button class="nav-pill" data-target="carne" onclick="scrollToSection('carne')">🥩 Carne</button>
+        <button class="nav-pill" data-target="pesce" onclick="scrollToSection('pesce')">🐟 Pesce</button>
+        <button class="nav-pill" data-target="risotto" onclick="scrollToSection('risotto')">🍚 Risotto</button>
+        <button class="nav-pill" data-target="pizza" onclick="scrollToSection('pizza')">🍕 Pizza</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="site-container p-6 space-y-6">
+
+    <!-- Antipasti Caldi -->
+    <section id="antipasti-caldi" class="card">
+      <div class="section-title">
+        <div class="emoji">🔥</div>
+        <h2 class="text-xl">Antipasti Caldi – Warme Vorspeisen</h2>
+      </div>
+      <ul class="mt-3">
+        <li class="menu-item"><div><strong>Lumache alla Provinciale</strong><div class="menu-desc">1 Dutzend Schnecken nach provinzialer Art</div></div><div class="menu-price">7,00 €</div></li>
+        <li class="menu-item"><div><strong>Lumache e Spinaci</strong><div class="menu-desc">1 Dutzend Schnecken mit Spinat, Knoblauch und Sahnesauce</div></div><div class="menu-price">8,50 €</div></li>
+        <li class="menu-item"><div><strong>Lumache al forno</strong><div class="menu-desc">1 Dutzend Schnecken überbacken</div></div><div class="menu-price">7,50 €</div></li>
+        <li class="menu-item"><div><strong>Lumache al Burro</strong><div class="menu-desc">1 Dutzend Schnecken mit Kräuterbutter</div></div><div class="menu-price">6,00 €</div></li>
+        <li class="menu-item"><div><strong>Zucchini al forno</strong><div class="menu-desc">Zucchini überbacken</div></div><div class="menu-price">6,00 €</div></li>
+        <li class="menu-item"><div><strong>Spinat al forno</strong><div class="menu-desc">Spinat überbacken</div></div><div class="menu-price">6,00 €</div></li>
+        <li class="menu-item"><div><strong>Spinat con Scampi al forno</strong><div class="menu-desc">Spinat mit Krabben überbacken</div></div><div class="menu-price">8,00 €</div></li>
+        <li class="menu-item"><div><strong>Broccoli al forno</strong><div class="menu-desc">Broccoli überbacken</div></div><div class="menu-price">6,00 €</div></li>
+        <li class="menu-item"><div><strong>Melanzane al forno</strong><div class="menu-desc">Auberginen überbacken</div></div><div class="menu-price">6,00 €</div></li>
+        <li class="menu-item"><div><strong>Funghi al forno</strong><div class="menu-desc">Champignons überbacken</div></div><div class="menu-price">6,00 €</div></li>
+        <li class="menu-item"><div><strong>Verdura mista al forno</strong><div class="menu-desc">Gemischtes Gemüse (Broccoli, Auberginen, Zucchini, Spinat, Champignons) überbacken</div></div><div class="menu-price">8,50 €</div></li>
+        <li class="menu-item"><div><strong>Patate al forno</strong><div class="menu-desc">Kartoffeln mit Vorderschinken und Broccoli in Tomaten-Sahnesauce überbacken</div></div><div class="menu-price">7,00 €</div></li>
+      </ul>
+    </section>
+
+    <!-- Antipasti Freddi -->
+    <section id="antipasti-freddi" class="card">
+      <div class="section-title"><div class="emoji">🥗</div><h2 class="text-xl">Antipasti Freddi – Kalte Vorspeisen</h2></div>
+      <ul class="mt-3">
+        <li class="menu-item"><div><strong>Antipasti misti</strong><div class="menu-desc">Gemischte Vorspeisen vom Buffet</div></div><div class="menu-price">9,50 €</div></li>
+        <li class="menu-item"><div><strong>Mozzarella, Pomodoro e Basilico</strong><div class="menu-desc">Frischkäse, Tomaten und Basilikum</div></div><div class="menu-price">7,00 €</div></li>
+        <li class="menu-item"><div><strong>Carpaccio con Parmigiano</strong><div class="menu-desc">Hauchdünne Filetscheiben mit Parmesankäse</div></div><div class="menu-price">11,50 €</div></li>
+        <li class="menu-item"><div><strong>Carpaccio al Salmone</strong><div class="menu-desc">Hauchdünne Lachsscheiben mit Zitronensauce</div></div><div class="menu-price">11,50 €</div></li>
+        <li class="menu-item"><div><strong>Cocktail di Scampi</strong><div class="menu-desc">Krabben-Cocktail</div></div><div class="menu-price">8,50 €</div></li>
+        <li class="menu-item"><div><strong>Cocktail di Scampi e Ananas</strong><div class="menu-desc">Krabben-Cocktail mit Ananas</div></div><div class="menu-price">9,00 €</div></li>
+      </ul>
+    </section>
+
+    <!-- Insalata -->
+    <section id="insalata" class="card">
+      <div class="section-title"><div class="emoji">🥗</div><h2 class="text-xl">Insalata – Salate</h2></div>
+      <ul class="mt-3">
+        <li class="menu-item"><div><strong>Insalata verde</strong><div class="menu-desc">Grüner Salat</div></div><div class="menu-price">3,00 €</div></li>
+        <li class="menu-item"><div><strong>Insalata di Pomodoro</strong><div class="menu-desc">Tomatensalat mit Zwiebeln</div></div><div class="menu-price">3,50 €</div></li>
+        <li class="menu-item"><div><strong>Insalata di Cetrioli</strong><div class="menu-desc">Gurkensalat</div></div><div class="menu-price">3,50 €</div></li>
+        <li class="menu-item"><div><strong>Insalata mista</strong><div class="menu-desc">Gemischter Salat</div></div><div class="menu-price">4,00 €</div></li>
+        <li class="menu-item"><div><strong>Insalata Capricciosa</strong><div class="menu-desc">Gemischter Salat mit Thunfisch, Vorderschinken, Käse und Ei</div></div><div class="menu-price">6,50 €</div></li>
+      </ul>
+    </section>
+
+    <!-- Pasta (vollständig) -->
+    <section id="pasta" class="card">
+      <div class="section-title"><div class="emoji">🍝</div><h2 class="text-xl">Pasta-Gerichte</h2></div>
+      <ul class="mt-3">
+        <li class="menu-item"><div><strong>Spaghetti Puttanesca</strong><div class="menu-desc">Spaghetti mit Oliven, Sardellen, Kapern, Zwiebeln und Tomatensauce</div></div><div class="menu-price">7,00 €</div></li>
+        <li class="menu-item"><div><strong>Spaghetti Zolosciutto</strong><div class="menu-desc">Spaghetti mit Vorderschinken, Gorgonzola und Hackfleischsauce</div></div><div class="menu-price">8,00 €</div></li>
+        <li class="menu-item"><div><strong>Bandnudeln Casa di Monte</strong><div class="menu-desc">Bandnudeln mit Broccoli und Sahnesauce</div></div><div class="menu-price">8,50 €</div></li>
+        <li class="menu-item"><div><strong>Bandnudeln al Salmone</strong><div class="menu-desc">Bandnudeln mit Lachs und Sahnesauce</div></div><div class="menu-price">8,50 €</div></li>
+        <li class="menu-item"><div><strong>Tagliatelle al Gorgonzola</strong><div class="menu-desc">Bandnudeln mit Gorgonzola-Käse und Sahnesauce</div></div><div class="menu-price">7,50 €</div></li>
+        <li class="menu-item"><div><strong>Tagliatelle alla Bosciola</strong><div class="menu-desc">Bandnudeln mit Erbsen, Zucchini, Vorderschinken und Tomatensauce</div></div><div class="menu-price">7,50 €</div></li>
+        <li class="menu-item"><div><strong>Tagliatelle Picco Bello</strong><div class="menu-desc">Bandnudeln mit Vorderschinken, Champignons und Tomaten - Sahnesauce</div></div><div class="menu-price">8,50 €</div></li>
+        <li class="menu-item"><div><strong>Tagliatelle con Scampi</strong><div class="menu-desc">Bandnudeln mit Krabben, Knoblauch und Sahnesauce</div></div><div class="menu-price">8,50 €</div></li>
+        <li class="menu-item"><div><strong>Penne Napoli</strong><div class="menu-desc">mit Tomatensauce</div></div><div class="menu-price">6,00 €</div></li>
+        <li class="menu-item"><div><strong>Penne Bolognese</strong><div class="menu-desc">mit Hackfleischsauce vom Rind</div></div><div class="menu-price">7,00 €</div></li>
+        <li class="menu-item"><div><strong>Penne Arabiata</strong><div class="menu-desc">mit Zwiebeln, Paprika, Sardellen, Oliven und Tomatensauce (scharf)</div></div><div class="menu-price">7,50 €</div></li>
+        <li class="menu-item"><div><strong>Penne Vegetaria</strong><div class="menu-desc">mit Auberginen, Zucchini, Paprika, Oliven und Tomaten - Sahnesauce überbacken</div></div><div class="menu-price">8,00 €</div></li>
+        <li class="menu-item"><div><strong>Penne Alfredo</strong><div class="menu-desc">mit Vorderschinken, Champignons, Broccoli und Tomaten - Sahnesauce überbacken</div></div><div class="menu-price">8,00 €</div></li>
+        <li class="menu-item"><div><strong>Penne Broccoli e Funghi</strong><div class="menu-desc">mit Broccoli, Champignons und Tomatensauce</div></div><div class="menu-price">7,50 €</div></li>
+        <li class="menu-item"><div><strong>Penne Tosca</strong><div class="menu-desc">mit Zucchini, Champignons und Tomatensauce</div></div><div class="menu-price">7,50 €</div></li>
+        <li class="menu-item"><div><strong>Penne ai quattro Formaggi</strong><div class="menu-desc">mit vier verschiedenen Käsesorten</div></div><div class="menu-price">8,00 €</div></li>
+        <li class="menu-item"><div><strong>Penne ai Spinaci e Gorgonzola</strong><div class="menu-desc">mit Spinat, Gorgonzola-Käse und Sahnesauce</div></div><div class="menu-price">8,00 €</div></li>
+        <li class="menu-item"><div><strong>Penne alla Contadina</strong><div class="menu-desc">mit Champignons, Erbsen, Vorderschinken und Sahnesauce</div></div><div class="menu-price">7,50 €</div></li>
+        <li class="menu-item"><div><strong>Penne al forno</strong><div class="menu-desc">mit Vorderschinken und Sahnesauce überbacken</div></div><div class="menu-price">7,00 €</div></li>
+        <li class="menu-item"><div><strong>Penne «USCANA»</strong><div class="menu-desc">nach Art des Hauses: mit Auberginen, Zucchini, Champignons und Tomatensauce</div></div><div class="menu-price">8,00 €</div></li>
+        <li class="menu-item"><div><strong>Tortellini alla Panna</strong><div class="menu-desc">Tortellini mit Vorderschinken und Sahnesauce</div></div><div class="menu-price">7,00 €</div></li>
+        <li class="menu-item"><div><strong>Tortellini Alfredo</strong><div class="menu-desc">Tortellini mit Vorderschinken, Erbsen und Tomaten - Sahnesauce überbacken</div></div><div class="menu-price">7,50 €</div></li>
+        <li class="menu-item"><div><strong>Tortellini Hawaii</strong><div class="menu-desc">Tortellini mit Vorderschinken, Ananas und Sahnesauce</div></div><div class="menu-price">7,50 €</div></li>
+        <li class="menu-item"><div><strong>Tortellini ai Spinaci e Gorgonzola</strong><div class="menu-desc">Tortellini mit Spinat, Gorgonzola-Käse und Sahnesauce</div></div><div class="menu-price">8,00 €</div></li>
+        <li class="menu-item"><div><strong>Tortellini Carbonara</strong><div class="menu-desc">Tortellini mit Vorderschinken, Ei, Parmesankäse und Sahnesauce</div></div><div class="menu-price">7,50 €</div></li>
+        <li class="menu-item"><div><strong>Tortellini al Burro e Salvia</strong><div class="menu-desc">Tortellini mit Butter und Salbei</div></div><div class="menu-price">6,50 €</div></li>
+        <li class="menu-item"><div><strong>Tortellini al forno</strong><div class="menu-desc">Tortellini mit Champignons, Vorderschinken, Erbsen und Tomaten - Sahnesauce überbacken</div></div><div class="menu-price">8,00 €</div></li>
+        <li class="menu-item"><div><strong>Tortellini Graser</strong><div class="menu-desc">Tortellini mit Champignons, Vorderschinken, Broccoli und Tomatensauce überbacken</div></div><div class="menu-price">8,00 €</div></li>
+        <li class="menu-item"><div><strong>Gnocchi Pomodoro e Basilico</strong><div class="menu-desc">Klößchen mit Tomatensauce und Basilikum</div></div><div class="menu-price">6,50 €</div></li>
+        <li class="menu-item"><div><strong>Gnocchi con Broccoli e Gorgonzola</strong><div class="menu-desc">Klößchen mit Broccoli, Gorgonzola-Käse und Sahnesauce</div></div><div class="menu-price">8,00 €</div></li>
+        <li class="menu-item"><div><strong>Gnocchi Melanzane</strong><div class="menu-desc">Klößchen mit Auberginen, Zucchini und Tomatensauce</div></div><div class="menu-price">8,00 €</div></li>
+        <li class="menu-item"><div><strong>Gnocchi al forno</strong><div class="menu-desc">Klößchen mit Champignons, Vorderschinken, Käse und Sahnesauce überbacken</div></div><div class="menu-price">7,50 €</div></li>
+        <li class="menu-item"><div><strong>Lasagne al forno</strong><div class="menu-desc">Lasagne nach Art des Hauses</div></div><div class="menu-price">7,50 €</div></li>
+        <li class="menu-item"><div><strong>Cannelloni al forno</strong><div class="menu-desc">Überbackene, gefüllte Nudelrollen</div></div><div class="menu-price">7,50 €</div></li>
+        <li class="menu-item"><div><strong>Tris di Pasta</strong><div class="menu-desc">drei verschiedene Nudelsorten in drei verschiedenen Saucen</div></div><div class="menu-price">8,50 €</div></li>
+      </ul>
+    </section>
+
+    <!-- Weiter: Carne, Pesce, Risotto, Pizza (nicht verändert in diesem Schritt) -->
+    <section id="carne" class="card">
+      <div class="section-title"><div class="emoji">🥩</div><h2 class="text-xl">Carne – Fleischgerichte</h2></div>
+      <ul class="mt-3">
+        <li class="menu-item"><div><strong>Scaloppina alla Milanese</strong><div class="menu-desc">Schweineschnitzel paniert</div></div><div class="menu-price">11,50 €</div></li>
+        <li class="menu-item"><div><strong>Scaloppina - Uovo</strong><div class="menu-desc">Schweineschnitzel mit Spiegelei und Käse überbacken</div></div><div class="menu-price">12,00 €</div></li>
+        <li class="menu-item"><div><strong>Scaloppina al vino bianco</strong><div class="menu-desc">Schweineschnitzel mit Weißweinsauce</div></div><div class="menu-price">12,00 €</div></li>
+        <li class="menu-item"><div><strong>Scaloppina Zingera</strong><div class="menu-desc">Schweineschnitzel mit Zigeunersauce</div></div><div class="menu-price">12,50 €</div></li>
+        <li class="menu-item"><div><strong>Scaloppina ai Funghi</strong><div class="menu-desc">Scaloppina mit Champignons & Sahnesauce</div></div><div class="menu-price">12,50 €</div></li>
+        <li class="menu-item"><div><strong>Scaloppina Hawaii</strong><div class="menu-desc">Schweineschnitzel mit Ananas und Käse überbacken</div></div><div class="menu-price">12,50 €</div></li>
+        <li class="menu-item"><div><strong>Scaloppina ai Funghi (Kalb)</strong><div class="menu-desc">Kalbsschnitzel mit Champignons & Sahnesauce</div></div><div class="menu-price">15,50 €</div></li>
+        <li class="menu-item"><div><strong>Scaloppina ai Gorgonzola (Kalb)</strong><div class="menu-desc">Kalbsschnitzel mit Gorgonzola & Sahnesauce</div></div><div class="menu-price">17,50 €</div></li>
+        <li class="menu-item"><div><strong>Scaloppina alla Carbonara (Kalb)</strong><div class="menu-desc">Kalbsschnitzel mit Spaghetti und Carbonarasauce (keine weiteren Beilagen)</div></div><div class="menu-price">17,00 €</div></li>
+        <li class="menu-item"><div><strong>Bistecca alla Griglia</strong><div class="menu-desc">Rumpsteak vom Grill (200g Rind)</div></div><div class="menu-price">16,50 €</div></li>
+        <li class="menu-item"><div><strong>Bistecca ai Funghi</strong><div class="menu-desc">Rumpsteak mit Champignons und Sahnesauce (200g)</div></div><div class="menu-price">18,50 €</div></li>
+        <li class="menu-item"><div><strong>Bistecca al Pepe verde</strong><div class="menu-desc">Rumpsteak mit grünem Pfeffer & Sahnesauce (200g)</div></div><div class="menu-price">18,50 €</div></li>
+        <li class="menu-item"><div><strong>Filetto alla Griglia</strong><div class="menu-desc">Rinderfilet vom Grill (200g)</div></div><div class="menu-price">20,50 €</div></li>
+      </ul>
+    </section>
+
+    <section id="pesce" class="card">
+      <div class="section-title"><div class="emoji">🐟</div><h2 class="text-xl">Pesce – Fischgerichte</h2></div>
+      <p class="text-sm text-gray-600 mt-1">Alle Fischgerichte mit gemischtem Salat.</p>
+      <ul class="mt-3">
+        <li class="menu-item"><div><strong>Spiedino di Gamberi</strong><div class="menu-desc">Gambas mit Knoblauch und Zitronensauce</div></div><div class="menu-price">20,50 €</div></li>
+        <li class="menu-item"><div><strong>Calamari Fritti</strong><div class="menu-desc">gebackene Tintenfischringe</div></div><div class="menu-price">12,50 €</div></li>
+        <li class="menu-item"><div><strong>Salmone al Vino bianco</strong><div class="menu-desc">Lachs in Weißweinsauce</div></div><div class="menu-price">18,00 €</div></li>
+        <li class="menu-item"><div><strong>Salmone Fiorentina</strong><div class="menu-desc">Lachs in Senfsauce</div></div><div class="menu-price">18,50 €</div></li>
+      </ul>
+    </section>
+
+    <section id="risotto" class="card">
+      <div class="section-title"><div class="emoji">🍚</div><h2 class="text-xl">Risotto – Reisgerichte</h2></div>
+      <ul class="mt-3">
+        <li class="menu-item"><div><strong>Risotto Pomodoro e Basilicum</strong><div class="menu-desc">Reis mit Tomatensauce und frischem Basilikum</div></div><div class="menu-price">6,50 €</div></li>
+        <li class="menu-item"><div><strong>Risotto Hawaii</strong><div class="menu-desc">Reis mit Hähnchenfleisch und Ananas</div></div><div class="menu-price">8,00 €</div></li>
+        <li class="menu-item"><div><strong>Risotto Marinare</strong><div class="menu-desc">Reis mit Meeresfrüchten und Tomatensauce</div></div><div class="menu-price">9,00 €</div></li>
+        <li class="menu-item"><div><strong>Risotto «USCANA»</strong><div class="menu-desc">Reis mit Auberginen, Zucchini, Champignons und Broccoli in Tomatensauce</div></div><div class="menu-price">9,00 €</div></li>
+      </ul>
+    </section>
+
+    <section id="pizza" class="card">
+      <div class="section-title"><div class="emoji">🍕</div><h2 class="text-xl">Pizza</h2></div>
+      <p class="italic text-sm mt-1">Alle Pizzen mit Tomaten, Käse und Oregano. Auf Wunsch: Knoblauch oder scharfe Sauce.</p>
+      <ul class="mt-3">
+        <li class="menu-item"><div><strong>Margherita</strong><div class="menu-desc">mit Käse</div></div><div class="menu-price">klein 3,00 € · groß 4,00 €</div></li>
+        <li class="menu-item"><div><strong>Cipolla</strong><div class="menu-desc">mit Zwiebeln</div></div><div class="menu-price">klein 3,80 € · groß 5,00 €</div></li>
+        <li class="menu-item"><div><strong>Napoli</strong><div class="menu-desc">mit Oliven und Knoblauch</div></div><div class="menu-price">klein 3,80 € · groß 5,00 €</div></li>
+        <li class="menu-item"><div><strong>Acciughe</strong><div class="menu-desc">mit Sardellen</div></div><div class="menu-price">klein 3,80 € · groß 5,00 €</div></li>
+        <li class="menu-item"><div><strong>Granturco</strong><div class="menu-desc">mit Mais</div></div><div class="menu-price">klein 4,30 € · groß 5,50 €</div></li>
+        <li class="menu-item"><div><strong>Salami</strong><div class="menu-desc">mit Salami</div></div><div class="menu-price">klein 4,30 € · groß 5,50 €</div></li>
+        <li class="menu-item"><div><strong>Diavolo</strong><div class="menu-desc">mit Paprika (scharf)</div></div><div class="menu-price">klein 4,30 € · groß 5,50 €</div></li>
+        <li class="menu-item"><div><strong>Peperoncino</strong><div class="menu-desc">mit milden Peperonis</div></div><div class="menu-price">klein 4,30 € · groß 5,50 €</div></li>
+        <li class="menu-item"><div><strong>Prosciutto</strong><div class="menu-desc">mit Vorderschinken</div></div><div class="menu-price">klein 4,30 € · groß 5,50 €</div></li>
+        <li class="menu-item"><div><strong>Funghi</strong><div class="menu-desc">mit Champignons</div></div><div class="menu-price">klein 4,30 € · groß 5,50 €</div></li>
+        <li class="menu-item"><div><strong>Carciofi</strong><div class="menu-desc">mit Artischocken</div></div><div class="menu-price">klein 4,80 € · groß 6,00 €</div></li>
+        <li class="menu-item"><div><strong>Spinaci</strong><div class="menu-desc">mit Spinat</div></div><div class="menu-price">klein 4,30 € · groß 5,50 €</div></li>
+        <li class="menu-item"><div><strong>Zucchini</strong><div class="menu-desc">mit Zucchini</div></div><div class="menu-price">klein 5,80 € · groß 7,00 €</div></li>
+        <li class="menu-item"><div><strong>Tonno</strong><div class="menu-desc">mit Thunfisch</div></div><div class="menu-price">klein 5,30 € · groß 6,00 €</div></li>
+        <li class="menu-item"><div><strong>Broccoli</strong><div class="menu-desc">mit Broccoli</div></div><div class="menu-price">klein 5,80 € · groß 7,00 €</div></li>
+        <li class="menu-item"><div><strong>Gorgonzola</strong><div class="menu-desc">mit Gorgonzolakäse</div></div><div class="menu-price">klein 5,80 € · groß 7,00 €</div></li>
+        <li class="menu-item"><div><strong>Vesuvio</strong><div class="menu-desc">mit Thunfisch und Zwiebeln</div></div><div class="menu-price">klein 6,80 € · groß 8,00 €</div></li>
+        <li class="menu-item"><div><strong>Quattro Stagioni</strong><div class="menu-desc">mit Vorderschinken, Thunfisch, Spinat und Champignons</div></div><div class="menu-price">klein 5,80 € · groß 7,00 €</div></li>
+        <li class="menu-item"><div><strong>Italia</strong><div class="menu-desc">mit Spinat, Zwiebeln und Paprika</div></div><div class="menu-price">klein 5,80 € · groß 7,00 €</div></li>
+        <li class="menu-item"><div><strong>Paesana</strong><div class="menu-desc">mit Vorderschinken, Spinat und Champignons</div></div><div class="menu-price">klein 5,80 € · groß 7,00 €</div></li>
+        <li class="menu-item"><div><strong>Romana</strong><div class="menu-desc">mit Speck und Zwiebeln</div></div><div class="menu-price">klein 5,80 € · groß 7,00 €</div></li>
+        <li class="menu-item"><div><strong>Hawaii</strong><div class="menu-desc">mit Ananas und Vorderschinken</div></div><div class="menu-price">klein 6,30 € · groß 7,50 €</div></li>
+        <li class="menu-item"><div><strong>Florida</strong><div class="menu-desc">mit Schinken und Ananas</div></div><div class="menu-price">klein 5,80 € · groß 7,00 €</div></li>
+        <li class="menu-item"><div><strong>Vonole</strong><div class="menu-desc">mit Babymuscheln und Knoblauch</div></div><div class="menu-price">klein 7,30 € · groß 8,50 €</div></li>
+        <li class="menu-item"><div><strong>Veetaria</strong><div class="menu-desc">mit Spinat, Champignons und Artischocken</div></div><div class="menu-price">klein 6,80 € · groß 8,00 €</div></li>
+        <li class="menu-item"><div><strong>Riviera</strong><div class="menu-desc">mit Thunfisch, Zwiebeln und Paprika</div></div><div class="menu-price">klein 6,80 € · groß 8,00 €</div></li>
+        <li class="menu-item"><div><strong>Pirata (Bolognese)</strong><div class="menu-desc">mit Hackfleischsauce vom Rind</div></div><div class="menu-price">klein 5,80 € · groß 7,00 €</div></li>
+        <li class="menu-item"><div><strong>Pirhefti</strong><div class="menu-desc">mit Spaghetti und Hackfleischsauce vom Rind</div></div><div class="menu-price">klein 6,80 € · groß 8,00 €</div></li>
+        <li class="menu-item"><div><strong>Quatro Formaggi</strong><div class="menu-desc">mit vier verschiedenen Käsesorten</div></div><div class="menu-price">klein 6,80 € · groß 8,00 €</div></li>
+        <li class="menu-item"><div><strong>Calzone</strong><div class="menu-desc">gefüllte Pizza mit Vorderschinken, Thunfisch, Champignons</div></div><div class="menu-price">klein 6,80 € · groß 8,00 €</div></li>
+        <li class="menu-item"><div><strong>Mista</strong><div class="menu-desc">gefüllte Pizza mit Vorderschinken, Thunfisch, Champignons und Salami</div></div><div class="menu-price">klein 6,80 € · groß 8,00 €</div></li>
+        <li class="menu-item"><div><strong>Mafiosa</strong><div class="menu-desc">mit Thunfisch, Zwiebeln, Salami und Knoblauch (scharf)</div></div><div class="menu-price">klein 6,80 € · groß 8,00 €</div></li>
+        <li class="menu-item"><div><strong>Capricciosa</strong><div class="menu-desc">mit Vorderschinken, Salami, Champignons und Zwiebeln</div></div><div class="menu-price">klein 6,80 € · groß 8,00 €</div></li>
+        <li class="menu-item"><div><strong>Orchidea</strong><div class="menu-desc">mit Vorderschinken, Oliven, Ei und Paprika</div></div><div class="menu-price">klein 6,80 € · groß 8,00 €</div></li>
+        <li class="menu-item"><div><strong>Calzone speciale allo Chef</strong><div class="menu-desc">gefüllte Pizza mit Spinat, Ei und Vorderschinken</div></div><div class="menu-price">groß 8,00 €</div></li>
+      </ul>
+    </section>
+
+  </main>
+</body>
+</html>
